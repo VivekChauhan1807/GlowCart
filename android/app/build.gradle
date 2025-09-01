@@ -1,3 +1,4 @@
+//*>==========C:\Users\vivek\GlowCart\android\app\build.gradle==========
 apply plugin: "com.android.application"
 apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
@@ -117,3 +118,6 @@ dependencies {
         implementation jscFlavor
     }
 }
+
+// add this line near the top of android/app/build.gradle (after apply plugin lines)
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"

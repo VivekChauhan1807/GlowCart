@@ -1,97 +1,163 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# GlowCart — Beauty E-Commerce Mobile App (React Native CLI)
 
-# Getting Started
+- GlowCart is a beauty e-commerce mobile application built with React Native (React Native CLI).  
+- This repository includes the source code, assets, and a release APK that runs without Metro (bundled JS).
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 🔎 Quick summary
+- **Platform:** Android (React Native CLI)  
+- **API used:** `https://dummyjson.com/products`  
+- **Screens implemented:** Onboarding, Login, Register (UI-only), Product List, Product Details, Cart, Profile  
+- **Note:** Login/Register are UI only (no backend authentication).  
+- **Release APK:** Built with embedded JS bundle — app runs without Metro / USB debugging.
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+---
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## ✅ Features implemented
+- Onboarding flow (UI)  
+- Login & Register screens (UI only)  
+- Product listing from public API  
+- Product details screen  
+- Add to cart / remove from cart / quantity control  
+- Cart total calculation and cart UI  
+- Profile screen (UI)  
+- App icon (1024×1024)  
+- Release APK build (standalone, bundled JS)
 
-```sh
-# Using npm
-npm start
+---
 
-# OR using Yarn
-yarn start
+## 📁 Repo structure (important paths)
+/GlowCart
+/android ← native Android project
+/ios ← iOS (not used for this assignment)
+/assets ← images, icons, fonts used by the app
+/docs
+/screenshots ← screenshots (visible in README)
+/video ← demo_full_recording.mp4 (also shared via Drive)
+App.js
+index.js
+package.json
+README.md
+
+yaml
+Copy code
+
+---
+
+## 📸 Screenshots & demo
+Screenshots are included in the repository:
+- ![Onboarding](docs/screenshots/01_onboarding.png)
+- ![Login](docs/screenshots/02_login.png)
+- ![Register](docs/screenshots/03_register.png)
+- ![Product List](docs/screenshots/04_product_list.png)
+- ![Product Details](docs/screenshots/05_product_details.png)
+- ![Add To Cart](docs/screenshots/06_add_to_cart.png)
+- ![Empty Cart](docs/screenshots/07_empty_cart.png)
+- ![Product Cart](docs/screenshots/08_product_cart.png)
+- ![Profile](docs/screenshots/09_profile.png)  
+
+**Demo video (recording):**
+
+- Stream / download link (Google Drive) : [▶ Watch Demo Video](https://drive.google.com/drive/folders/1XaG1XTV65pPpwhR3wuI0P9s-0-8Yi2_q?usp=sharing)
+- Local file: `docs/video/demo_full_recording.mp4`
+
+> Tip: If you want a client to play the video directly in the README, upload the video to YouTube as *Unlisted* and paste the YouTube link here.
+
+---
+
+## 🧰 Prerequisites (what to install on the machine)
+- Node.js (v16 or v18 recommended) — check with `node -v`  
+- npm (comes with Node) — check `npm -v`  
+- Java JDK (11 or 17) — check `java -version`  
+- Android SDK & platform tools (Android Studio recommended)  
+- ANDROID_HOME environment variable set to your SDK path.  
+- Enable **USB debugging** on the Android device for dev testing.
+
+---
+
+## 🛠️ How to run (development)
+> Use these commands while developing (requires Android SDK, JDK & device/emulator).
+
+1. Install dependencies:
+
+```bash
+npm install
 ```
 
-## Step 2: Build and run your app
+2. Start Metro in one terminal:
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npx react-native start
 ```
 
-### iOS
+3. In another terminal run on connected Android device/emulator:
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```bash
+npx react-native run-android
 ```
 
-Then, and every time you update your native dependencies, run:
+4. 📦 How to build a release APK (what we used)
 
-```sh
-bundle exec pod install
+- (Exact commands used to embed the JS bundle and produce a standalone APK)
+
+- Create Android assets folder (Windows PowerShell — run from project root if folder missing):
+
+```bash
+New-Item -ItemType Directory -Force -Path android\app\src\main\assets
 ```
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
+5. Generate JS bundle and copy assets into Android resources:
 
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+```bash
+npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+6. Build the release APK (Windows PowerShell inside android folder):
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```bash
+cd android
+.\gradlew assembleRelease
+```
 
-## Step 3: Modify your app
+7. Resulting APK path:
 
-Now that you have successfully run the app, let's make changes!
+```bash
+android/app/build/outputs/apk/release/app-release.apk
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+- We renamed the generated APK to GlowCart.apk for easier sharing. When sharing directly from a device, Android may name the file base.apk — this is normal. For client delivery share the GlowCart.apk from the PC build folder or attach it to a GitHub Release.
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## ⚠️ Known issues / notes
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- A 0–1s blank/default background may appear before the onboarding screen on some devices — this is system default while JS initializes
+- It does not affect functionality. (If needed we can add a native branded splash screen.)
 
-## Congratulations! :tada:
+- Onboarding/Login/Register are UI-only (no backend).
 
-You've successfully run and modified your React Native App. :partying_face:
+- If you modify the UI, test in dev mode (USB debugging) then regenerate bundle and APK before sharing.
 
-### Now what?
+## 📦 What to include when delivering to client
+- Push the latest code (with README and /docs) to GitHub.
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+- Provide the GlowCart.apk found at android/app/build/outputs/apk/release/ (or attach APK to GitHub Release).
 
-# Troubleshooting
+- Provide demo video (Drive or YouTube) and screenshots (already in docs/screenshots).
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+- Add a short note: Onboarding/Login/Register = UI only.
 
-# Learn More
+## 🔁 How to rebuild after changes
 
-To learn more about React Native, take a look at the following resources:
+- Make code changes.
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Test in dev:
+
+```bash
+npx react-native start
+npx react-native run-android
+```
+
+- When ready to create a new release APK, repeat the bundle + assembleRelease steps shown above.
+
+## 👨‍💻 Author / Contact
+- Project prepared from supplied Figma designs & public API.
